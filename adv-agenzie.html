@@ -21,23 +21,16 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        /* Stili per l'effetto Parallasse dei Mates */
+        /* Stili per l'effetto Parallasse dei Mates puliti */
         .parallax-mate {
             position: absolute;
-            border-radius: 50%;
-            padding: 4px;
-            background: linear-gradient(135deg, #4F46E5, #9333EA, #0ea5e9);
             z-index: 0;
-            opacity: 0.9;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
             transition: transform 0.1s ease-out;
         }
         .parallax-mate img {
-            border-radius: 50%;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            border: 4px solid #0b0b0f;
+            object-fit: contain;
             display: block;
         }
         .cta-content-top {
@@ -185,17 +178,17 @@
     </section>
 
     <!-- 5. BOTTOM CTA CON PARALLASSE -->
-    <section class="hero-v1" style="padding: 100px 0 20px 0; background-color: #0b0b0f; position: relative; overflow: hidden;">
-        
+    <section class="hero-v1" style="padding: 120px 0; background-color: #0b0b0f; position: relative; overflow: hidden; min-height: auto;">
+    
         <!-- Parallax Mates -->
-        <div class="parallax-mate" data-speed="-0.04" style="top: 15%; left: 10%; width: 120px; height: 120px;">
-            <img src="NOME_FILE_1.png" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/allmates-it/landing-adv/main/69bdbfbc0e5f9de7b3f914d6_Mate-feed-3.png';" alt="Mate 1" />
+        <div class="parallax-mate" data-speed="-0.04" style="top: 5%; left: 15%; width: 220px; height: 220px;">
+            <img src="69bdbfbc0e5f9de7b3f914d6_Mate-feed-3.png" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/allmates-it/landing-adv/main/69bdbfbc0e5f9de7b3f914d6_Mate-feed-3.png';" alt="Mate Avatar 1" />
         </div>
-        <div class="parallax-mate" data-speed="0.05" style="top: 40%; right: 10%; width: 150px; height: 150px;">
-            <img src="NOME_FILE_2.png" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/allmates-it/landing-adv/main/69bdbfbc30c9fab3c26e7323_mate-feed-5.png';" alt="Mate 2" />
+        <div class="parallax-mate" data-speed="0.05" style="top: 30%; right: 15%; width: 220px; height: 220px;">
+            <img src="69bdbfbc30c9fab3c26e7323_mate-feed-5.png" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/allmates-it/landing-adv/main/69bdbfbc30c9fab3c26e7323_mate-feed-5.png';" alt="Mate Avatar 2" />
         </div>
-        <div class="parallax-mate" data-speed="-0.03" style="bottom: 10%; left: 20%; width: 100px; height: 100px;">
-            <img src="NOME_FILE_3.png" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/allmates-it/landing-adv/main/69bdc41cd21ba2363275a65c_mate-feed-13.png';" alt="Mate 3" />
+        <div class="parallax-mate" data-speed="-0.03" style="bottom: 0%; left: 25%; width: 220px; height: 220px;">
+            <img src="69bdc41cd21ba2363275a65c_mate-feed-13.png" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/allmates-it/landing-adv/main/69bdc41cd21ba2363275a65c_mate-feed-13.png';" alt="Mate Avatar 3" />
         </div>
 
         <div class="container-10 w-container cta-content-top" style="text-align: center;">
