@@ -21,6 +21,29 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        /* Stili per l'effetto Parallasse dei Mates */
+        .parallax-mate {
+            position: absolute;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(135deg, #4F46E5, #9333EA, #0ea5e9);
+            z-index: 0;
+            opacity: 0.9;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            transition: transform 0.1s ease-out;
+        }
+        .parallax-mate img {
+            border-radius: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 4px solid #0b0b0f;
+            display: block;
+        }
+        .cta-content-top {
+            position: relative;
+            z-index: 2;
+        }
     </style>
 </head>
 <body>
@@ -29,9 +52,9 @@
     <!-- HEADER ORIGINALE COMPLETO CON DROPDOWN -->
     <section class="navbar"><div class="nav-container"><div class="navbar-wrap"><div class="navbar-desktop-wrap"><div class="navbar-desktop-left _02"><a class="navbar-brand w-inline-block" href="/"><img alt="" class="navbar-brand-logo" height="20" loading="lazy" src="https://cdn.prod.website-files.com/69b8d32a03ce13513e236a94/69b8d4064fc6554839667630_allmates.ai-logo-white-colors.svg" width="50"/></a></div><div class="navbar-desktop-center"><div class="nav-left-menu-wrap"><a class="nav-menu w-inline-block" href="/platform"><div class="paragraph-02 nav-text">Platform</div></a><div class="nav-dropdown w-dropdown" data-delay="0" data-hover="true"><div class="dropdown-toggle w-dropdown-toggle"><div class="icon w-icon-dropdown-toggle"></div><div class="text-block">Ressources</div></div><nav class="nav-dropdown-list _02 w-dropdown-list"><div class="dropdown-list-wrap black"><div class="dropdown-wrap small"><div class="dropdown-column"><div class="dropdown-menu-wrap"><div class="dropdown-menu-list"><a class="dropdown-menu w-inline-block" href="https://help.allmates.ai/en/help"><div class="paragraph-02 dropdown-link-text">Help Center</div><div class="menu-underline"></div></a><a class="dropdown-menu w-inline-block" href="https://feedback.allmates.ai/en/roadmap"><div class="paragraph-02 dropdown-link-text">Roadmap</div><div class="menu-underline"></div></a><a class="dropdown-menu w-inline-block" href="https://feedback.allmates.ai/en/changelog"><div class="paragraph-02 dropdown-link-text">Changelog</div><div class="menu-underline"></div></a></div></div></div></div></div></nav></div><a class="nav-menu w-inline-block" href="/pricing"><div class="paragraph-02 nav-text">Pricing</div></a><div class="nav-dropdown w-dropdown" data-delay="0" data-hover="true"><div class="dropdown-toggle w-dropdown-toggle"><div class="icon w-icon-dropdown-toggle"></div><div class="text-block">Company</div></div><nav class="nav-dropdown-list _02 w-dropdown-list"><div class="dropdown-list-wrap black"><div class="dropdown-wrap small"><div class="dropdown-column"><div class="dropdown-menu-wrap"><div class="dropdown-menu-list"><a class="dropdown-menu w-inline-block" href="/about"><div class="paragraph-02 dropdown-link-text">About</div><div class="menu-underline"></div></a><a class="dropdown-menu w-inline-block" href="/partners"><div class="paragraph-02 dropdown-link-text">Partners</div><div class="menu-underline"></div></a></div></div></div></div></div></nav></div><div class="nav-divider"></div></div></div><div class="navbar-desktop-right _02"><a class="nav-menu w-inline-block" href="https://app.allmates.ai/"><div class="paragraph-02 nav-text">Sign in</div></a><a class="button-03 w-variant-cc5dd8fd-70b5-4808-abb1-9e4187eb6e40 w-inline-block" data-wf--button-03--variant="small-button" href="https://manage.allmates.ai/trial?utm_source=landingpage&amp;utm_medium=web&amp;utm_campaign=freetrial&amp;utm_term=allmates"><div class="button-03-text-wrap w-variant-cc5dd8fd-70b5-4808-abb1-9e4187eb6e40"><div class="button-03-text-group"><div class="primary-button-text text-black w-variant-cc5dd8fd-70b5-4808-abb1-9e4187eb6e40">Get a demo</div><div class="primary-button-text text-black w-variant-cc5dd8fd-70b5-4808-abb1-9e4187eb6e40">Get a demo</div></div></div></a></div></div><div class="navbar-mobile-wrap"><div class="navbar-top-wrap"><a class="navbar-brand w-inline-block" href="/"><img alt="" class="navbar-brand-logo" height="25" loading="lazy" src="https://cdn.prod.website-files.com/69b8d32a03ce13513e236a94/69b8d4064fc6554839667630_allmates.ai-logo-white-colors.svg" width="100"/></a><div class="navbar-right"><div class="navbar-menu-box"><div class="hamburger" data-animation-type="lottie" data-autoplay="0" data-default-duration="0" data-direction="1" data-duration="2.0020019204587935" data-is-ix2-target="1" data-ix2-initial-state="0" data-loading="eager" data-loop="0" data-renderer="svg" data-src="https://cdn.prod.website-files.com/688d31d885372b14ca5e3d8b/6895ddc8596063c67f981615_White%20Menu.json" data-w-id="8ffceaf5-6b51-2c15-f8a6-787c24f5d208"></div></div></div></div></div><div class="mobile-dropdown-wrap"><div class="mobile-dropdown-list-wrap"><div class="mobile-dropdown-list"><a class="paragraph-02 mobile-menu" href="/platform">Platform</a></div><div class="mobile-dropdown-list pages"><div class="dropdown w-dropdown" data-delay="0" data-hover="true" data-w-id="8ffceaf5-6b51-2c15-f8a6-787c24f5d21b"><div class="dropdown-toggle w-dropdown-toggle"><div class="icon w-icon-dropdown-toggle"></div><div>Ressources</div></div><nav class="nav-dropdown-list w-dropdown-list"><div class="dropdown-list-wrap"><div class="dropdown-wrap"><div class="dropdown-column"><div class="dropdown-menu-wrap"><div class="dropdown-menu-list"><a class="dropdown-menu w-inline-block" href="https://help.allmates.ai/en/help"><div class="paragraph-02 dropdown-link-text">Help center</div><div class="menu-underline"></div></a><a class="dropdown-menu w-inline-block" href="https://feedback.allmates.ai/en/roadmap"><div class="paragraph-02 dropdown-link-text">Roadmap</div><div class="menu-underline"></div></a><a class="dropdown-menu w-inline-block" href="https://feedback.allmates.ai/en/changelog"><div class="paragraph-02 dropdown-link-text">Changelog</div><div class="menu-underline"></div></a></div></div></div></div></div></nav></div></div><div class="mobile-dropdown-list"><a class="paragraph-02 mobile-menu" href="/pricing">Pricing</a></div><div class="mobile-dropdown-list pages"><div class="dropdown w-dropdown" data-delay="0" data-hover="true" data-w-id="2140ec8d-25a7-dc05-bdcb-5c7a4eff049b"><div class="dropdown-toggle w-dropdown-toggle"><div class="icon w-icon-dropdown-toggle"></div><div>Company</div></div><nav class="nav-dropdown-list w-dropdown-list"><div class="dropdown-list-wrap"><div class="dropdown-wrap"><div class="dropdown-column"><div class="dropdown-menu-wrap"><div class="dropdown-menu-list"><a class="dropdown-menu w-inline-block" href="/about"><div class="paragraph-02 dropdown-link-text">About</div><div class="menu-underline"></div></a><a class="dropdown-menu w-inline-block" href="/partners"><div class="paragraph-02 dropdown-link-text">Partners</div><div class="menu-underline"></div></a></div></div></div></div></div></nav></div></div></div></div></div></div></section>
 
-    <!-- 1. HERO SECTION CORRETTA CON ALLINEAMENTO -->
+    <!-- 1. HERO SECTION CORRETTA CON ALLINEAMENTO E TWEAKS -->
     <section class="hero-v2" style="background-color: #0b0b0f; padding-top: 30px;">
-        <div class="nav-container"> <!-- CORREZIONE ALLINEAMENTO: SOSTITUITO container-10 CON nav-container -->
+        <div class="nav-container">
             <div class="hero-v2-wrap">
                 <div class="hero-v2-content" id="w-node-_382025ed-d9db-5e8a-77e8-b7724a1b02b5-e6a39d89" style="text-align: left;">
                     <div style="color: #ff4a00; font-weight: 800; text-transform: uppercase; margin-bottom: 24px; font-size: 24px; letter-spacing: 2px;">LA TUA AGENZIA STA BRUCIANDO MARGINI?</div>
@@ -42,7 +65,6 @@
                     </div>
                 </div>
                 <div class="hero-v2-image-wrap" id="w-node-_382025ed-d9db-5e8a-77e8-b7724a1b02be-e6a39d89">
-                    <!-- URL DINAMICO: Fallback se l'utente sposta la repo -->
                     <img src="hero-adv.png" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/allmates-it/landing-adv/main/hero-adv.png';" alt="Manuale vs AI Automation" style="border-radius: 16px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); width: 100%; height: auto;" />
                 </div>
             </div>
@@ -52,16 +74,13 @@
     <!-- 2. PAIN POINT SECTION -->
     <section class="cta-v1" style="padding: 100px 0; background-color: #0b0b0f;">
         <div class="container-10 w-container">
-            <!-- Aggiunto display:flex e flex-direction:column per forzare l'incolonnamento verticale -->
             <div class="cta-v1-wrap" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
                 <h2 class="heading-14" style="color: #fff; margin-bottom: 24px;">Il collo di bottiglia della tua agenzia non è la strategia, è l'esecuzione.</h2>
                 <p class="paragraph-9" style="max-width: 800px; margin: 0 auto; color: #a1a1aa; font-size: 22px;">I tuoi specialisti perdono fino a <strong style="color: #fff;">30 ore a settimana per ogni cliente</strong> incrociando metriche su Excel, cliccando manualmente nei Business Manager e caricando creatività. Questo rallenta la scalabilità, satura il team e distrugge la tua marginalità.</p>
             
                 <div style="margin-top: 60px; width: 100%;">
-                    <!-- Riquadro in Dark Mode -->
                     <div class="glass-card" style="padding: 40px; display: inline-block; text-align: center; max-width: 1200px; width: 100%;">
                           <h3 style="margin-bottom: 30px; font-size: 24px; color: #fff;">Come spende il tempo un Media Buyer oggi</h3>
-                        <!-- Nome immagine corretto in Graph3d.png -->
                         <img src="Graph3d.png" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/allmates-it/landing-adv/main/Graph3d.png';" alt="70% Operatività vs 30% Strategia" style="border-radius: 12px; width: 100%; height: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.3);" />
                     </div>
                 </div>
@@ -165,30 +184,99 @@
         </div>
     </section>
 
-    <!-- 5. BOTTOM CTA -->
-    <section class="hero-v1" style="padding: 100px 0; background-color: #0b0b0f;">
-        <div class="container-10 w-container" style="text-align: center;">
+    <!-- 5. BOTTOM CTA CON PARALLASSE -->
+    <section class="hero-v1" style="padding: 100px 0 60px 0; background-color: #0b0b0f; position: relative; overflow: hidden;">
+        
+        <!-- Parallax Mates -->
+        <div class="parallax-mate" data-speed="-0.04" style="top: 15%; left: 10%; width: 120px; height: 120px;">
+            <img src="https://i.pravatar.cc/300?img=11" alt="Mate Avatar 1" />
+        </div>
+        <div class="parallax-mate" data-speed="0.05" style="top: 40%; right: 10%; width: 150px; height: 150px;">
+            <img src="https://i.pravatar.cc/300?img=68" alt="Mate Avatar 2" />
+        </div>
+        <div class="parallax-mate" data-speed="-0.03" style="bottom: 10%; left: 20%; width: 100px; height: 100px;">
+            <img src="https://i.pravatar.cc/300?img=44" alt="Mate Avatar 3" />
+        </div>
+
+        <div class="container-10 w-container cta-content-top" style="text-align: center;">
             <h2 class="heading-15" style="color: #fff; font-size: 48px; margin-bottom: 24px;">Smetti di fare report.<br/>Inizia a scalare i budget.</h2>
             <p class="paragraph-10" style="color: #a1a1aa; max-width: 600px; margin: 0 auto 40px; font-size: 22px;">Il Media Buying manuale è finito. Prenota una demo di 15 minuti e scopri come i nostri ADV Mates possono trasformare la tua agenzia già da domani.</p>
             <a class="button-2 w-button" href="https://calendly.com/" style="background: linear-gradient(90deg, #4F46E5 0%, #9333EA 100%); color: #fff; padding: 16px 36px; border-radius: 50px; font-weight: bold; text-decoration: none; display: inline-block; font-size: 20px; box-shadow: 0 10px 25px rgba(147, 51, 234, 0.4); transition: transform 0.3s ease;" target="_blank">Prenota la tua Demo Esplorativa</a>
         </div>
     </section>
 
-    <!-- FOOTER ORIGINALE -->
-    <section class="footer" style="border-top: 1px solid rgba(255,255,255,0.1);">
+    <!-- FOOTER ORIGINALE COMPLETO -->
+    <section class="footer" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 60px; padding-bottom: 40px; background-color: #0b0b0f;">
         <div class="container">
-            <div class="footer-wrap">
-                <div class="footer-left">
-                    <img alt="" class="image" src="https://cdn.prod.website-files.com/69b8d32a03ce13513e236a94/69b8d4064fc6554839667630_allmates.ai-logo-white-colors.svg"/>
+            <div class="footer-wrap" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px;">
+                <div class="footer-left" style="max-width: 300px;">
+                    <img alt="Allmates Logo" class="image" src="https://cdn.prod.website-files.com/69b8d32a03ce13513e236a94/69b8d4064fc6554839667630_allmates.ai-logo-white-colors.svg" style="margin-bottom: 20px;"/>
                     <div class="paragraph-02 text-grey">Harness the collective power of AI to elevate your team's productivity.</div>
                 </div>
+                
+                <div class="footer-right" style="display: flex; gap: 60px; flex-wrap: wrap;">
+                    <div class="footer-column">
+                        <div class="footer-menu-wrap">
+                            <div class="paragraph-02" style="color: #fff; font-weight: bold; margin-bottom: 15px;">Platform</div>
+                            <div class="footer-menu-list">
+                                <a class="paragraph-02 footer-link-2 text-grey" href="/platform" style="text-decoration: none; display: block; margin-bottom: 10px;">Features</a>
+                                <a class="paragraph-02 footer-link-2 text-grey" href="/pricing" style="text-decoration: none; display: block; margin-bottom: 10px;">Pricing</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-column">
+                        <div class="footer-menu-wrap">
+                            <div class="paragraph-02" style="color: #fff; font-weight: bold; margin-bottom: 15px;">Ressources</div>
+                            <div class="footer-menu-list">
+                                <a class="paragraph-02 footer-link-2 text-grey" href="https://help.allmates.ai/en/help" style="text-decoration: none; display: block; margin-bottom: 10px;">Help Center</a>
+                                <a class="paragraph-02 footer-link-2 text-grey" href="https://feedback.allmates.ai/en/roadmap" style="text-decoration: none; display: block; margin-bottom: 10px;">Roadmap</a>
+                                <a class="paragraph-02 footer-link-2 text-grey" href="https://feedback.allmates.ai/en/changelog" style="text-decoration: none; display: block; margin-bottom: 10px;">Changelog</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-column">
+                        <div class="footer-menu-wrap">
+                            <div class="paragraph-02" style="color: #fff; font-weight: bold; margin-bottom: 15px;">Company</div>
+                            <div class="footer-menu-list">
+                                <a class="paragraph-02 footer-link-2 text-grey" href="/about" style="text-decoration: none; display: block; margin-bottom: 10px;">About</a>
+                                <a class="paragraph-02 footer-link-2 text-grey" href="/partners" style="text-decoration: none; display: block; margin-bottom: 10px;">Partners</a>
+                                <a class="paragraph-02 footer-link-2 text-grey" href="/getdemo" style="text-decoration: none; display: block; margin-bottom: 10px;">Contact Us</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-column">
+                        <div class="footer-menu-wrap">
+                            <div class="paragraph-02" style="color: #fff; font-weight: bold; margin-bottom: 15px;">Legal</div>
+                            <div class="footer-menu-list">
+                                <a class="paragraph-02 footer-link-2 text-grey" href="/cookie-policy" style="text-decoration: none; display: block; margin-bottom: 10px;">Cookie Policy</a>
+                                <a class="paragraph-02 footer-link-2 text-grey" href="/privacy-policy" style="text-decoration: none; display: block; margin-bottom: 10px;">Privacy policy</a>
+                                <a class="paragraph-02 footer-link-2 text-grey" href="/terms-and-conditions" style="text-decoration: none; display: block; margin-bottom: 10px;">Terms and conditions</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="copyright-wrap">
-                <div class="paragraph-02 copyright-text">© 2026 allmates.ai - All rights reserved</div>
+            
+            <div class="copyright-wrap" style="margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+                <div class="paragraph-02 copyright-text text-grey">© 2026 allmates.ai - All rights reserved</div>
             </div>
         </div>
     </section>
 
 </div>
+
+<!-- Script per l'Effetto Parallasse -->
+<script>
+    document.addEventListener('mousemove', function(e) {
+        const x = (window.innerWidth / 2 - e.clientX) / 50;
+        const y = (window.innerHeight / 2 - e.clientY) / 50;
+        
+        document.querySelectorAll('.parallax-mate').forEach(function(mate) {
+            const speed = mate.getAttribute('data-speed');
+            mate.style.transform = `translate(${x * speed * 100}px, ${y * speed * 100}px)`;
+        });
+    });
+</script>
+
 </body>
 </html>
