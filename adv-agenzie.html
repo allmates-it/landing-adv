@@ -320,5 +320,71 @@
     });
 </script>
 
+<!-- Script per i Pannelli Slide-out dei MATES -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const panel = document.getElementById('mate-panel');
+    const overlay = document.getElementById('mate-panel-overlay');
+    const closeBtn = document.getElementById('mate-panel-close');
+    
+    const triggers = document.querySelectorAll('.mate-trigger-btn');
+
+    triggers.forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const mateId = e.currentTarget.getAttribute('data-mate');
+            await loadMateData(mateId);
+            
+            panel.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    const closePanel = () => {
+        panel.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    };
+
+    closeBtn.addEventListener('click', closePanel);
+    overlay.addEventListener('click', closePanel);
+
+    async function loadMateData(mateId) {
+        try {
+            // URL ASSOLUTO PUNTATO AL TUO NUOVO REPOSITORY SHARED-ASSETS
+            const response = await fetch(`https://allmates-it.github.io/shared-assets/mates/${mateId}.json`);
+            const data = await response.json();
+            
+            document.getElementById('mate-ecosystem').textContent = data.identity.ecosystem;
+            document.getElementById('mate-role').textContent = data.identity.role;
+            document.getElementById('mate-access').textContent = data.identity.access_level;
+            document.getElementById('mate-avatar').src = data.identity.avatar_url;
+            document.getElementById('mate-problem').textContent = data.mission.problem_solved;
+            document.getElementById('mate-api').textContent = data.tech_engine.core_api;
+            document.getElementById('mate-endpoints').textContent = data.tech_engine.endpoints;
+
+            const skillsList = document.getElementById('mate-skills-list');
+            skillsList.innerHTML = '';
+            data.skills.forEach(skill => {
+                skillsList.innerHTML += `<li><strong>${skill.title}</strong><span>${skill.description}</span></li>`;
+            });
+
+            const tagsList = document.getElementById('mate-tags-list');
+            tagsList.innerHTML = '';
+            data.ecosystem_tags.forEach(tag => {
+                tagsList.innerHTML += `<span class="tag">${tag}</span>`;
+            });
+
+            document.getElementById('mate-time').textContent = data.impact.time_saved;
+            document.getElementById('mate-errors').textContent = data.impact.error_reduction;
+            document.getElementById('mate-roi-highlight').textContent = data.impact.roi_highlight;
+            
+        } catch (error) {
+            console.error("Errore nel caricamento dei dati del Mate:", error);
+        }
+    }
+});
+</script>    
 </body>
 </html>
