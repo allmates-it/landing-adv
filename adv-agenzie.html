@@ -4,53 +4,76 @@
 <!-- ========================================== -->
 <!-- INIZIO: STILE PANNELLO MATE (CSS) --> 
 <!-- ========================================== -->
+<!-- ========================================== -->
+<!-- INIZIO: STILE PANNELLO MATE (CSS 3D SPATIAL) -->
+<!-- ========================================== -->
 <style>
-/* 1. L'Overlay e la Luce Retrostante (Il segreto del vetro) */
+/* 1. L'Overlay e l'Orb Luminoso (La luce dietro il vetro) */
 .mate-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(5, 5, 8, 0.8); 
-    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    background: rgba(5, 5, 10, 0.85); 
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
     opacity: 0; visibility: hidden; transition: all 0.5s ease; z-index: 9998;
+    
+    /* Punto di fuga per la prospettiva 3D del pannello */
+    perspective: 1200px; 
 }
-/* La macchia di luce (Orb) dietro il pannello */
+/* La fonte di luce olografica dietro il pannello */
 .mate-overlay::after {
-    content: ''; position: fixed; top: 15%; right: -5%; width: 500px; height: 600px;
-    background: radial-gradient(circle, rgba(157, 227, 253, 0.25) 0%, rgba(179, 147, 227, 0.1) 40%, transparent 70%);
-    filter: blur(60px); opacity: 0; transition: opacity 0.8s ease; pointer-events: none;
+    content: ''; position: fixed; top: 20%; right: 0%; width: 500px; height: 600px;
+    background: radial-gradient(circle, rgba(157, 227, 253, 0.3) 0%, rgba(179, 147, 227, 0.1) 40%, transparent 70%);
+    filter: blur(50px); opacity: 0; transition: opacity 0.8s ease; pointer-events: none;
 }
 .mate-overlay.active { opacity: 1; visibility: visible; }
 .mate-overlay.active::after { opacity: 1; }
 
-/* 2. Il Pannello 3D (Vetro e Riflessi) */
+/* 2. Il Pannello 3D (Cornice Neon, Vetro e ROTAZIONE SPAZIALE) */
 .mate-panel {
     position: fixed; top: 2vh; right: -100%; 
     width: 100%; max-width: 460px; height: 96vh; 
     border-radius: 24px; 
     
-    /* Vetro iper-trasparente */
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.01) 100%);
-    backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+    /* Vetro scurissimo ma molto trasparente */
+    background: rgba(10, 15, 25, 0.3);
+    backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
     
-    /* Spigoli del vetro illuminati */
-    border-top: 1px solid rgba(255, 255, 255, 0.4);
-    border-left: 1px solid rgba(255, 255, 255, 0.2);
-    border-right: 1px solid rgba(0, 0, 0, 0.5);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+    /* LA CORNICE NEON */
+    border: 1px solid rgba(157, 227, 253, 0.4);
     
-    /* Ombre per staccarlo dallo sfondo */
-    box-shadow: -40px 40px 80px rgba(0, 0, 0, 0.9), inset 0 0 40px rgba(255, 255, 255, 0.03);
+    /* Bagliore neon esterno + Ombra di profondità + Bagliore interno */
+    box-shadow: 
+        0 0 20px rgba(157, 227, 253, 0.15),
+        inset 0 0 30px rgba(157, 227, 253, 0.05),
+        -40px 30px 80px rgba(0, 0, 0, 0.95);
         
-    z-index: 9999; transition: right 0.6s cubic-bezier(0.16, 1, 0.3, 1); 
+    z-index: 9999; 
+    
+    /* ANIMAZIONE 3D: Entra da destra e si inclina "di sguincio" (-12 gradi) */
+    transform: rotateY(-12deg) scale(0.95);
+    transform-origin: right center; /* Ruota facendo perno sul lato destro */
+    transition: right 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s ease-out; 
+    
     overflow-y: auto; color: #fff; font-family: sans-serif;
     scrollbar-width: none; 
 }
 .mate-panel::-webkit-scrollbar { display: none; }
+
+/* Posizione aperta e inclinata */
 .mate-panel.active { right: 1vw; }
 
-/* Il Taglio di Luce Diagonale (Gloss Effect) */
+/* INTERATTIVITÀ: Quando il mouse è sopra, si raddrizza dolcemente */
+.mate-panel.active:hover {
+    transform: rotateY(0deg) scale(1);
+    box-shadow: 
+        0 0 30px rgba(157, 227, 253, 0.25),
+        inset 0 0 40px rgba(157, 227, 253, 0.1),
+        -20px 20px 60px rgba(0, 0, 0, 0.9);
+}
+
+/* Riflesso Speculare (Gloss) */
 .mate-panel::after {
     content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(105deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.02) 20%, transparent 20.1%);
+    background: linear-gradient(115deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.01) 30%, transparent 50%);
     border-radius: inherit; pointer-events: none; z-index: 10000;
 }
 
@@ -58,75 +81,81 @@
 
 /* Pulsante di chiusura */
 .mate-close-btn {
-    position: absolute; top: 15px; right: 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2);
-    color: #fff; width: 36px; height: 36px; border-radius: 50%; font-size: 20px; cursor: pointer; 
+    position: absolute; top: 15px; right: 20px; background: rgba(157, 227, 253, 0.05); border: 1px solid rgba(157, 227, 253, 0.2);
+    color: #9DE3FD; width: 36px; height: 36px; border-radius: 50%; font-size: 20px; cursor: pointer; 
     display: flex; align-items: center; justify-content: center; transition: 0.3s; z-index: 10001;
 }
-.mate-close-btn:hover { background: rgba(157, 227, 253, 0.2); color: #9DE3FD; transform: scale(1.1); }
+.mate-close-btn:hover { background: rgba(157, 227, 253, 0.2); transform: scale(1.1); box-shadow: 0 0 15px rgba(157, 227, 253, 0.5); }
 
 /* 3. L'Avatar */
 .mate-header { display: flex; align-items: center; gap: 25px; margin-bottom: 35px; }
 .mate-avatar-wrapper {
     width: 90px; height: 90px; border-radius: 50%; padding: 3px; flex-shrink: 0;
     background: linear-gradient(135deg, #9DE3FD, #B393E3);
-    box-shadow: 0 0 30px rgba(157, 227, 253, 0.4), inset 0 0 10px rgba(0,0,0,0.8);
+    box-shadow: 0 0 30px rgba(157, 227, 253, 0.5), inset 0 0 10px rgba(0,0,0,0.8);
 }
 .mate-avatar-wrapper img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; background: #000; }
 
-.mate-title h2 { margin: 0; font-size: 11px; text-transform: uppercase; letter-spacing: 3px; color: #9DE3FD; opacity: 0.9; }
-.mate-title h3 { margin: 5px 0 12px; font-size: 26px; font-weight: 700; letter-spacing: -0.5px; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-.mate-badge { background: rgba(157, 227, 253, 0.1); padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 600; border: 1px solid rgba(157, 227, 253, 0.4); text-transform: uppercase; color: #9DE3FD; letter-spacing: 1px; }
+.mate-title h2 { margin: 0; font-size: 11px; text-transform: uppercase; letter-spacing: 3px; color: #9DE3FD; opacity: 0.9; text-shadow: 0 0 8px rgba(157, 227, 253, 0.5); }
+.mate-title h3 { margin: 5px 0 12px; font-size: 26px; font-weight: 700; letter-spacing: -0.5px; text-shadow: 0 4px 10px rgba(0,0,0,0.8); }
+.mate-badge { background: rgba(157, 227, 253, 0.1); padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 600; border: 1px solid rgba(157, 227, 253, 0.5); text-transform: uppercase; color: #9DE3FD; letter-spacing: 1px; box-shadow: 0 0 10px rgba(157, 227, 253, 0.2); }
 
-/* 4. Le Sezioni Interne (Lastre di Vetro Sospese) */
+/* 4. Le Sezioni Interne (TUTTE con la patina azzurra e il riflesso luminoso) */
 .mate-section { 
     margin-bottom: 25px; 
-    background: rgba(255, 255, 255, 0.02); /* Quasi completamente trasparente */
+    /* Il gradiente ciano che hai scelto per uniformarle */
+    background: linear-gradient(135deg, rgba(157, 227, 253, 0.1), rgba(157, 227, 253, 0.01)); 
     padding: 22px; 
     border-radius: 16px; 
     
-    /* Il taglio di luce bianco netto sopra */
-    border: none;
-    border-top: 1px solid rgba(255,255,255,0.25);
-    border-left: 1px solid rgba(255,255,255,0.08);
+    /* Bordo azzurro marcato con il forte riflesso bianco in alto */
+    border: 1px solid rgba(157, 227, 253, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
     
-    /* L'ombra che le fa fluttuare */
-    box-shadow: 0 15px 25px rgba(0,0,0,0.4);
+    /* Ombra profonda per galleggiare + Bagliore interno azzurro */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5), inset 0 0 25px rgba(157, 227, 253, 0.08);
     position: relative;
+    
+    /* Effetto 3D leggero sui box quando la scheda ruota */
+    transform: translateZ(10px);
+    transform-style: preserve-3d;
 }
 
 .mate-section h4 { 
     margin: 0 0 15px; font-size: 11px; font-weight: 700; text-transform: uppercase; 
     color: #9DE3FD; 
     letter-spacing: 1.5px; display: flex; align-items: center; gap: 8px; 
-    text-shadow: 0 0 15px rgba(157, 227, 253, 0.4);
+    text-shadow: 0 0 12px rgba(157, 227, 253, 0.6);
 }
 .mate-section h4::before { content: ''; display: block; width: 4px; height: 12px; border-radius: 2px; background: #9DE3FD; box-shadow: 0 0 8px #9DE3FD; }
 .mate-section p { font-size: 14px; line-height: 1.7; margin: 0; color: #e2e8f0; font-weight: 300; text-wrap: pretty; }
 
 /* Skills & Patenti */
 .mate-skills ul { list-style: none; padding: 0; margin: 0; }
-.mate-skills li { margin-bottom: 18px; font-size: 14px; padding-left: 15px; border-left: 2px solid rgba(157, 227, 253, 0.4); }
+.mate-skills li { margin-bottom: 18px; font-size: 14px; padding-left: 15px; border-left: 2px solid rgba(157, 227, 253, 0.5); }
 .mate-skills li:last-child { margin-bottom: 0; }
 .mate-skills li strong { display: block; color: #fff; margin-bottom: 4px; font-size: 15px; font-weight: 600;}
 .mate-skills li span { color: #cbd5e1; font-size: 13px; line-height: 1.5; display: block; font-weight: 300;}
 
 .tags-container { display: flex; flex-wrap: wrap; gap: 10px; }
-.tag { background: rgba(157, 227, 253, 0.05); color: #9DE3FD; padding: 6px 14px; border-radius: 8px; font-size: 12px; border: 1px solid rgba(157, 227, 253, 0.3); font-weight: 500; }
+.tag { background: rgba(157, 227, 253, 0.05); color: #9DE3FD; padding: 6px 14px; border-radius: 8px; font-size: 12px; border: 1px solid rgba(157, 227, 253, 0.4); font-weight: 500; box-shadow: 0 0 10px rgba(157, 227, 253, 0.1); }
 .mate-tech-badges { display: flex; gap: 10px; flex-wrap: wrap;}
-.tech-badge { background: rgba(0,0,0,0.3); padding: 8px 14px; border-radius: 8px; font-size: 12px; border-top: 1px solid rgba(255,255,255,0.1); color: #f8fafc; font-family: monospace; display: flex; align-items: center; gap: 8px; box-shadow: 0 5px 10px rgba(0,0,0,0.3); }
+.tech-badge { background: rgba(0,0,0,0.4); padding: 8px 14px; border-radius: 8px; font-size: 12px; border: 1px solid rgba(157, 227, 253, 0.2); border-top: 1px solid rgba(255,255,255,0.2); color: #f8fafc; font-family: monospace; display: flex; align-items: center; gap: 8px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.5); }
 .tech-badge::before { content: 'API'; color: #9DE3FD; font-size: 10px; font-weight: bold; background: rgba(157, 227, 253, 0.15); padding: 2px 4px; border-radius: 4px; }
 
 /* 5. Box ROI (Il Bottom Line Evidenziato) */
 .mate-roi {
-    background: linear-gradient(135deg, rgba(157, 227, 253, 0.1), rgba(157, 227, 253, 0.02));
-    border-top: 1px solid rgba(157, 227, 253, 0.6);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.6), inset 0 0 30px rgba(157, 227, 253, 0.1);
+    /* Eredita il gradiente e i bordi da .mate-section, aggiunge solo un po' di glow in più */
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6), inset 0 0 35px rgba(157, 227, 253, 0.12);
 }
 .roi-grid { display: flex; flex-direction: column; gap: 14px; font-size: 14px; color: #f1f5f9;}
 .roi-item { display: flex; align-items: center; gap: 10px; }
 .roi-highlight { margin-top: 5px; padding-top: 15px; border-top: 1px solid rgba(157, 227, 253, 0.3); font-weight: 600; color: #fff; font-size: 16px; }
-.roi-highlight span { color: #9DE3FD; text-shadow: 0 0 20px rgba(157, 227, 253, 0.6); }
+.roi-highlight span { color: #9DE3FD; text-shadow: 0 0 15px rgba(157, 227, 253, 0.6); }
 </style>
+<!-- ========================================== -->
+<!-- FINE: STILE PANNELLO MATE (CSS 3D SPATIAL) -->
+<!-- ========================================== -->
 <!-- ========================================== -->
 <!-- FINE: STILE PANNELLO MATE (CSS) -->
 <!-- ========================================== -->
