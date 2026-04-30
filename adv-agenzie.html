@@ -2,23 +2,19 @@
 <html data-wf-domain="www.allmates.ai" data-wf-page="69b8d32b03ce13513e236b99" data-wf-site="69b8d32a03ce13513e236a94" lang="it">
     
 <!-- ========================================== -->
-<!-- INIZIO: STILE PANNELLO MATE (CSS) --> 
-<!-- ========================================== -->
-<!-- ========================================== -->
-<!-- INIZIO: STILE PANNELLO MATE (CSS 3D SPATIAL) -->
+<!-- INIZIO: STILE PANNELLO MATE (MOTORE 3D ESTREMO) -->
 <!-- ========================================== -->
 <style>
-/* 1. L'Overlay e l'Orb Luminoso (La luce dietro il vetro) */
+/* 1. L'Overlay e la Prospettiva (La "Stanza" 3D) */
 .mate-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(5, 5, 10, 0.85); 
     backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
     opacity: 0; visibility: hidden; transition: all 0.5s ease; z-index: 9998;
     
-    /* Punto di fuga per la prospettiva 3D del pannello */
-    perspective: 1200px; 
+    /* IL SEGRETO DELLA PROFONDITÀ: Definisce quanto è "profonda" la stanza */
+    perspective: 1000px; 
 }
-/* La fonte di luce olografica dietro il pannello */
 .mate-overlay::after {
     content: ''; position: fixed; top: 20%; right: 0%; width: 500px; height: 600px;
     background: radial-gradient(circle, rgba(157, 227, 253, 0.3) 0%, rgba(179, 147, 227, 0.1) 40%, transparent 70%);
@@ -27,68 +23,76 @@
 .mate-overlay.active { opacity: 1; visibility: visible; }
 .mate-overlay.active::after { opacity: 1; }
 
-/* 2. Il Pannello 3D (Cornice Neon, Vetro e ROTAZIONE SPAZIALE) */
+/* 2. Il Pannello 3D (Vetro Spesso 1cm ed Estrusione) */
 .mate-panel {
     position: fixed; top: 2vh; right: -100%; 
-    width: 100%; max-width: 460px; height: 96vh; 
+    width: 100%; max-width: 480px; height: 96vh; 
     border-radius: 24px; 
     
-    /* Vetro scurissimo ma molto trasparente */
-    background: rgba(10, 15, 25, 0.3);
+    background: rgba(16, 20, 30, 0.45);
     backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
     
-    /* LA CORNICE NEON */
-    border: 1px solid rgba(157, 227, 253, 0.4);
+    /* Bordo luminoso frontale */
+    border: 1px solid rgba(157, 227, 253, 0.2);
     
-    /* Bagliore neon esterno + Ombra di profondità + Bagliore interno */
+    /* LA MAGIA DELLO SPESSORE (Fianco del vetro e Ombre) */
     box-shadow: 
-        0 0 20px rgba(157, 227, 253, 0.15),
-        inset 0 0 30px rgba(157, 227, 253, 0.05),
-        -40px 30px 80px rgba(0, 0, 0, 0.95);
+        inset 2px 2px 4px rgba(255, 255, 255, 0.4), /* Riflesso spigolo alto/sx */
+        inset -2px -2px 6px rgba(0, 0, 0, 0.6), /* Ombra spigolo basso/dx */
+        -8px 8px 0px rgba(10, 15, 22, 0.95), /* L'ESTRUSIONE: Il fianco fisico spesso 1cm */
+        -40px 40px 80px rgba(0, 0, 0, 0.9), /* Ombra morbida proiettata nel vuoto */
+        0 0 30px rgba(157, 227, 253, 0.15); /* Bagliore neon */
         
     z-index: 9999; 
     
-    /* ANIMAZIONE 3D: Entra da destra e si inclina "di sguincio" (-12 gradi) */
-    transform: rotateY(-12deg) scale(0.95);
-    transform-origin: right center; /* Ruota facendo perno sul lato destro */
-    transition: right 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s ease-out; 
+    /* LO SGUINCIO ESTREMO E L'ATTIVAZIONE DELL'ASSE Z */
+    transform-style: preserve-3d;
+    transform: rotateY(-20deg) rotateX(5deg) scale(0.9);
+    transform-origin: right center; /* Ruota come una porta incardinata a destra */
+    transition: right 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s ease-out; 
     
-    overflow-y: auto; color: #fff; font-family: sans-serif;
+    overflow-y: auto; overflow-x: hidden; color: #fff; font-family: sans-serif;
     scrollbar-width: none; 
 }
 .mate-panel::-webkit-scrollbar { display: none; }
-
-/* Posizione aperta e inclinata */
 .mate-panel.active { right: 1vw; }
 
-/* INTERATTIVITÀ: Quando il mouse è sopra, si raddrizza dolcemente */
+/* INTERATTIVITÀ: Si raddrizza un po' al passaggio del mouse per renderlo leggibile */
 .mate-panel.active:hover {
-    transform: rotateY(0deg) scale(1);
+    transform: rotateY(-4deg) rotateX(2deg) scale(1);
     box-shadow: 
-        0 0 30px rgba(157, 227, 253, 0.25),
-        inset 0 0 40px rgba(157, 227, 253, 0.1),
-        -20px 20px 60px rgba(0, 0, 0, 0.9);
+        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
+        inset -2px -2px 6px rgba(0, 0, 0, 0.6),
+        -4px 4px 0px rgba(10, 15, 22, 0.95), /* Il fianco si assottiglia frontalmente */
+        -20px 20px 60px rgba(0, 0, 0, 0.8), 
+        0 0 40px rgba(157, 227, 253, 0.25);
 }
 
 /* Riflesso Speculare (Gloss) */
 .mate-panel::after {
     content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(115deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.01) 30%, transparent 50%);
+    background: linear-gradient(115deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.01) 30%, transparent 50%);
     border-radius: inherit; pointer-events: none; z-index: 10000;
+    transform: translateZ(1px); /* Sollevato appena sopra il vetro base */
 }
 
-.mate-panel-content { padding: 40px 30px; position: relative; z-index: 2; }
+/* Il contenitore che permette ai box figli di uscire in 3D */
+.mate-panel-content { 
+    padding: 40px 30px; position: relative; z-index: 2; 
+    transform-style: preserve-3d; 
+}
 
-/* Pulsante di chiusura */
+/* Pulsante di chiusura (Fluttua altissimo) */
 .mate-close-btn {
     position: absolute; top: 15px; right: 20px; background: rgba(157, 227, 253, 0.05); border: 1px solid rgba(157, 227, 253, 0.2);
     color: #9DE3FD; width: 36px; height: 36px; border-radius: 50%; font-size: 20px; cursor: pointer; 
     display: flex; align-items: center; justify-content: center; transition: 0.3s; z-index: 10001;
+    transform: translateZ(40px); 
 }
-.mate-close-btn:hover { background: rgba(157, 227, 253, 0.2); transform: scale(1.1); box-shadow: 0 0 15px rgba(157, 227, 253, 0.5); }
+.mate-close-btn:hover { background: rgba(157, 227, 253, 0.2); transform: translateZ(50px) scale(1.1); box-shadow: 0 0 15px rgba(157, 227, 253, 0.5); }
 
-/* 3. L'Avatar */
-.mate-header { display: flex; align-items: center; gap: 25px; margin-bottom: 35px; }
+/* 3. L'Avatar (Fluttua) */
+.mate-header { display: flex; align-items: center; gap: 25px; margin-bottom: 35px; transform: translateZ(30px); }
 .mate-avatar-wrapper {
     width: 90px; height: 90px; border-radius: 50%; padding: 3px; flex-shrink: 0;
     background: linear-gradient(135deg, #9DE3FD, #B393E3);
@@ -100,25 +104,29 @@
 .mate-title h3 { margin: 5px 0 12px; font-size: 26px; font-weight: 700; letter-spacing: -0.5px; text-shadow: 0 4px 10px rgba(0,0,0,0.8); }
 .mate-badge { background: rgba(157, 227, 253, 0.1); padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 600; border: 1px solid rgba(157, 227, 253, 0.5); text-transform: uppercase; color: #9DE3FD; letter-spacing: 1px; box-shadow: 0 0 10px rgba(157, 227, 253, 0.2); }
 
-/* 4. Le Sezioni Interne (TUTTE con la patina azzurra e il riflesso luminoso) */
+/* 4. Le Sezioni Interne (Lastre con spessore proprio, FLUTTUANTI IN Z) */
 .mate-section { 
     margin-bottom: 25px; 
-    /* Il gradiente ciano che hai scelto per uniformarle */
-    background: linear-gradient(135deg, rgba(157, 227, 253, 0.1), rgba(157, 227, 253, 0.01)); 
+    background: rgba(20, 25, 35, 0.4); 
+    backdrop-filter: blur(10px);
     padding: 22px; 
     border-radius: 16px; 
+    border: 1px solid rgba(157, 227, 253, 0.15);
     
-    /* Bordo azzurro marcato con il forte riflesso bianco in alto */
-    border: 1px solid rgba(157, 227, 253, 0.3);
-    border-top: 1px solid rgba(255, 255, 255, 0.4);
+    /* LA MAGIA DEL PARALLASSE: I box escono fisicamente dal vetro di 30px */
+    transform: translateZ(30px);
+    transition: transform 0.3s ease;
     
-    /* Ombra profonda per galleggiare + Bagliore interno azzurro */
-    box-shadow: 0 15px 30px rgba(0,0,0,0.5), inset 0 0 25px rgba(157, 227, 253, 0.08);
-    position: relative;
-    
-    /* Effetto 3D leggero sui box quando la scheda ruota */
-    transform: translateZ(10px);
-    transform-style: preserve-3d;
+    /* Il mini-spessore dei box interni */
+    box-shadow: 
+        inset 1px 1px 3px rgba(255, 255, 255, 0.3), /* Luce spigolo */
+        -4px 4px 0px rgba(10, 12, 18, 0.8), /* Fianco del box interno */
+        -15px 15px 25px rgba(0,0,0,0.6); /* Ombra proiettata sul pannello madre */
+}
+
+/* Quando passi il mouse sopra una sezione, questa fluttua ancora più in alto! */
+.mate-section:hover {
+    transform: translateZ(45px); 
 }
 
 .mate-section h4 { 
@@ -140,13 +148,18 @@
 .tags-container { display: flex; flex-wrap: wrap; gap: 10px; }
 .tag { background: rgba(157, 227, 253, 0.05); color: #9DE3FD; padding: 6px 14px; border-radius: 8px; font-size: 12px; border: 1px solid rgba(157, 227, 253, 0.4); font-weight: 500; box-shadow: 0 0 10px rgba(157, 227, 253, 0.1); }
 .mate-tech-badges { display: flex; gap: 10px; flex-wrap: wrap;}
-.tech-badge { background: rgba(0,0,0,0.4); padding: 8px 14px; border-radius: 8px; font-size: 12px; border: 1px solid rgba(157, 227, 253, 0.2); border-top: 1px solid rgba(255,255,255,0.2); color: #f8fafc; font-family: monospace; display: flex; align-items: center; gap: 8px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.5); }
+.tech-badge { background: rgba(0,0,0,0.6); padding: 8px 14px; border-radius: 8px; font-size: 12px; border: 1px solid rgba(157, 227, 253, 0.2); border-top: 1px solid rgba(255,255,255,0.2); color: #f8fafc; font-family: monospace; display: flex; align-items: center; gap: 8px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.5); }
 .tech-badge::before { content: 'API'; color: #9DE3FD; font-size: 10px; font-weight: bold; background: rgba(157, 227, 253, 0.15); padding: 2px 4px; border-radius: 4px; }
 
-/* 5. Box ROI (Il Bottom Line Evidenziato) */
+/* 5. Box ROI (Il Bottom Line) */
 .mate-roi {
-    /* Eredita il gradiente e i bordi da .mate-section, aggiunge solo un po' di glow in più */
-    box-shadow: 0 20px 40px rgba(0,0,0,0.6), inset 0 0 35px rgba(157, 227, 253, 0.12);
+    background: linear-gradient(135deg, rgba(157, 227, 253, 0.15), rgba(157, 227, 253, 0.02));
+    border-top: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 
+        inset 1px 1px 4px rgba(255, 255, 255, 0.5), 
+        -4px 4px 0px rgba(10, 12, 18, 0.8), /* Fianco */
+        -15px 15px 30px rgba(0,0,0,0.7), /* Ombra proiettata */
+        0 0 20px rgba(157, 227, 253, 0.15); /* Bagliore ciano extra */
 }
 .roi-grid { display: flex; flex-direction: column; gap: 14px; font-size: 14px; color: #f1f5f9;}
 .roi-item { display: flex; align-items: center; gap: 10px; }
@@ -154,10 +167,7 @@
 .roi-highlight span { color: #9DE3FD; text-shadow: 0 0 15px rgba(157, 227, 253, 0.6); }
 </style>
 <!-- ========================================== -->
-<!-- FINE: STILE PANNELLO MATE (CSS 3D SPATIAL) -->
-<!-- ========================================== -->
-<!-- ========================================== -->
-<!-- FINE: STILE PANNELLO MATE (CSS) -->
+<!-- FINE: STILE PANNELLO MATE (MOTORE 3D ESTREMO) -->
 <!-- ========================================== -->
     
 <head>
