@@ -492,7 +492,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadMateData(mateId) {
         try {
             // URL ASSOLUTO PUNTATO AL TUO NUOVO REPOSITORY SHARED-ASSETS
-            const response = await fetch(`https://allmates-it.github.io/shared-assets/mates/${mateId}.json`);
+            const response = await fetch(`https://allmates-it.github.io/shared-assets/mates/${mateId}.json?v=` + new Date().getTime());
             const data = await response.json();
             
             document.getElementById('mate-ecosystem').textContent = data.identity.ecosystem;
