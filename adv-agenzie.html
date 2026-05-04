@@ -107,34 +107,45 @@
 /* 3. L'Avatar e i Titoli */
 .mate-header { display: flex; align-items: center; gap: 25px; margin-bottom: 35px; transform: translateZ(20px); }
 
-/* CONTENITORE: Gestisce lo spessore dell'aureola sfumata tramite il padding */
+/* CONTENITORE ESTERNO: Gestisce l'aureola sfumata */
 .mate-avatar-wrapper {
-    width: 103px; height: 103px; 
-    border-radius: 50%; 
-    padding: 7px; /* AUMENTATO da 6px a 8px: questo è lo spessore del cerchio sfumato */
+    width: 103px; height: 103px;
+    border-radius: 50%;
+    padding: 7px;
     flex-shrink: 0;
     background: linear-gradient(135deg, #9DE3FD 0%, #70AFED 25%, #888CE9 50%, #B393E3 70%, #E3AFA0 85%, #E28675 100%);
     box-shadow: -5px 5px 20px rgba(157, 227, 253, 0.3), 5px -5px 20px rgba(226, 134, 117, 0.2), inset 0 0 10px rgba(0,0,0,0.6);
 }
 
-/* IMMAGINE: Gestisce lo spessore del cerchio nero tramite il border */
-.mate-avatar-wrapper img { 
-    width: 100%; height: 100%; 
-    border-radius: 50%; 
-    object-fit: cover; 
-    background: #0a0c12; 
-    border: 7px solid #0a0c12; /* AUMENTATO da 3px a 8px: ora è spesso uguale al padding sfumato */
+/* NUOVO CONTENITORE INTERNO: Gestisce il cerchio nero e "taglia" l'immagine zoomata */
+.mate-avatar-inner {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    border: 7px solid #0a0c12;
+    background: #0a0c12;
+    overflow: hidden; /* FONDAMENTALE: Taglia la parte di foto che esce dal cerchio */
+    display: flex; align-items: center; justify-content: center;
 }
-.mate-title h2 { 
-    margin: 0 0 5px 0; 
-    font-size: 24px; 
+
+/* IMMAGINE: Zoomata e riposizionata */
+.mate-avatar-inner img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    /* TRUCCO ZOOM: Ingrandisce del 45% e la sposta in giù dell'8% per tagliare l'aria sopra la testa */
+    transform: scale(1.45) translateY(8%);
+}
+
+.mate-title h2 {
+    margin: 0 0 5px 0;
+    font-size: 24px;
     font-weight: 800;
-    text-transform: uppercase; 
-    letter-spacing: 1px; 
-    color: #00E5FF; 
-    opacity: 1; 
-    text-shadow: 0 0 15px rgba(0, 229, 255, 0.5); 
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #00E5FF;
+    opacity: 1;
+    text-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
 }
+
 .mate-title h3 { margin: 0 0 15px; font-size: 26px; font-weight: 700; letter-spacing: -0.5px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
 .mate-badge { background: rgba(255,255,255,0.05); padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; box-shadow: inset 1px 1px 2px rgba(255,255,255,0.2); text-transform: uppercase; color: #fff; letter-spacing: 1px; }
 
@@ -658,7 +669,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
         <div class="mate-header">
             <div class="mate-avatar-wrapper">
-                <img id="mate-avatar" src="" alt="Mate Avatar">
+                <!-- NUOVO CONTENITORE INTERNO -->
+                <div class="mate-avatar-inner">
+                    <img id="mate-avatar" src="" alt="Mate Avatar">
+                </div>
             </div>
             <div class="mate-title">
                 <h2 id="mate-ecosystem"></h2>
