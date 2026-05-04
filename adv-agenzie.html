@@ -10,10 +10,12 @@
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
    
     /*  TOLTI per evitare sfocatura intera pagina:
+    background: rgba(8, 10, 15, 0.6); 
+    backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); 
+    */
     
-    /* Sfondo base più chiaro per far risaltare la luce */
-    /*background: rgba(8, 10, 15, 0.6); */
-    /*backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); */
+    /* Aggiungo solo un velo scurissimo leggero per staccare il popup dal fondo */
+    background: rgba(0, 0, 0, 0.4);
     
     opacity: 0; visibility: hidden; transition: all 0.6s ease; z-index: 9998;
     perspective: 1500px; 
@@ -27,7 +29,7 @@
 .mate-overlay.active { opacity: 1; visibility: visible; }
 .mate-overlay.active::before, .mate-overlay.active::after { opacity: 1; }
 
-/* 2. Il Pannello 3D (Bordo spesso azzurro fisso e bagliore) */
+/* 2. Il Pannello 3D (Bordo spesso azzurro fisso e bagliore INTERNO/ESTERNO) */
 .mate-panel {
     position: fixed; top: 2vh; right: -100%; 
     width: 100%; max-width: 480px; height: 96vh; 
@@ -47,7 +49,11 @@
         inset -2px -2px 10px rgba(0, 0, 0, 0.3),
         inset 0 0 60px rgba(255, 255, 255, 0.03),
         
-        /* LA LUCE NEON (Fissa) */
+        /* LA LUCE NEON INTERNA (Per ammorbidire il bordo netto) */
+        inset 0 0 25px rgba(0, 229, 255, 0.6),
+        inset 0 0 80px rgba(0, 229, 255, 0.15),
+        
+        /* LA LUCE NEON ESTERNA (Fissa) */
         0 0 15px rgba(0, 229, 255, 0.6), 
         0 0 60px rgba(0, 229, 255, 0.4), 
         
@@ -64,7 +70,7 @@
 .mate-panel::-webkit-scrollbar { display: none; }
 .mate-panel.active { right: 1vw; }
 
-/* STATO HOVER (Mouse sopra il pannello) */
+/* STATO HOVER (Mouse sopra il pannello principale) */
 .mate-panel.active:hover {
     transform: rotateY(-2deg) scale(1); /* Si raddrizza verso l'utente */
     
@@ -73,7 +79,11 @@
         inset -2px -2px 10px rgba(0, 0, 0, 0.4),
         inset 0 0 60px rgba(255, 255, 255, 0.05),
         
-        /* LA LUCE NEON (Copiata identica per non farla sparire all'hover) */
+        /* LUCE NEON INTERNA (Leggermente intensificata) */
+        inset 0 0 35px rgba(0, 229, 255, 0.8),
+        inset 0 0 100px rgba(0, 229, 255, 0.25),
+        
+        /* LUCE NEON ESTERNA (Copiata identica per non farla sparire all'hover) */
         0 0 15px rgba(0, 229, 255, 0.6), 
         0 0 60px rgba(0, 229, 255, 0.4), 
         
@@ -114,20 +124,19 @@
 .mate-title h3 { margin: 0 0 15px; font-size: 26px; font-weight: 700; letter-spacing: -0.5px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
 .mate-badge { background: rgba(255,255,255,0.05); padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; box-shadow: inset 1px 1px 2px rgba(255,255,255,0.2); text-transform: uppercase; color: #fff; letter-spacing: 1px; }
 
-/* 4. Le Sezioni Interne (Con Bordo Neon Ciano) */
+/* 4. Le Sezioni Interne (Spente di default, accese all'hover) */
 .mate-section { 
     margin-bottom: 25px; 
     background: rgba(255, 255, 255, 0.02); 
     padding: 22px; 
     border-radius: 20px; 
     
-    /* Bordo e alone Neon Ciano */
-    border: 3px solid rgba(0, 229, 255, 0.9);
+    /* STATO SPENTO: Bordo neutro e quasi invisibile, nessuna luce neon */
+    border: 1px solid rgba(255, 255, 255, 0.05);
     box-shadow: 
         inset 1px 1px 4px rgba(255, 255, 255, 0.1), 
         inset -1px -1px 5px rgba(0, 0, 0, 0.2),
-        0 0 25px rgba(0, 229, 255, 0.5), /* Outer Glow */
-        0 10px 20px rgba(0,0,0,0.2); 
+        0 10px 20px rgba(0,0,0,0.15); /* Solo ombra di profondità normale */
         
     transform: translateZ(15px);
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
@@ -135,11 +144,18 @@
 
 .mate-section:hover {
     transform: translateZ(25px); 
-    border-color: rgba(0, 229, 255, 0.5);
+    
+    /* STATO ACCESO (HOVER): Si accende il bordo e l'alone neon ciano */
+    border-color: rgba(0, 229, 255, 0.6);
     box-shadow: 
         inset 1px 1px 5px rgba(255, 255, 255, 0.2), 
         inset -1px -1px 5px rgba(0, 0, 0, 0.3), 
-        0 0 20px rgba(0, 229, 255, 0.15), /* Intensify Glow */
+        
+        /* Luce Neon Esterna */
+        0 0 25px rgba(0, 229, 255, 0.3), 
+        /* Luce Neon Interna (morbidezza) */
+        inset 0 0 15px rgba(0, 229, 255, 0.15), 
+        
         0 15px 25px rgba(0,0,0,0.3);
 }
 
