@@ -29,23 +29,24 @@
 .mate-overlay.active { opacity: 1; visibility: visible; }
 .mate-overlay.active::before, .mate-overlay.active::after { opacity: 1; }
 
-/* 2. Il Pannello 3D (Vetro Smerigliato Volumetrico) */
+/* 2. Il Pannello 3D (Aggiunto bordo spesso azzurro fisso e bagliore) */
 .mate-panel {
     position: fixed; top: 2vh; right: -100%; 
     width: 100%; max-width: 480px; height: 96vh; 
     border-radius: 28px;
     
-    /* Background trasparente + Texture Noise SVG */
     background: 
         url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.06'/%3E%3C/svg%3E"),
         linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.01) 100%);
     backdrop-filter: blur(45px); -webkit-backdrop-filter: blur(45px);
     
-    border: none;
+    /* MODIFICA: Bordo spesso e visibile sempre */
+    border: 2px solid rgba(0, 229, 255, 0.5);
     box-shadow: 
         inset 2px 2px 6px rgba(255, 255, 255, 0.25),
         inset -2px -2px 10px rgba(0, 0, 0, 0.3),
         inset 0 0 60px rgba(255, 255, 255, 0.03),
+        0 0 30px rgba(0, 229, 255, 0.15), /* Bagliore esterno ciano fisso */
         -30px 20px 60px rgba(0, 0, 0, 0.6);
         
     z-index: 9999; transform-style: preserve-3d;
@@ -56,8 +57,6 @@
     overflow-y: auto; overflow-x: hidden; color: #fff; font-family: sans-serif;
     scrollbar-width: none; 
 }
-.mate-panel::-webkit-scrollbar { display: none; }
-.mate-panel.active { right: 1vw; }
 
 .mate-panel.active:hover {
     transform: rotateY(-2deg) scale(1);
@@ -65,34 +64,41 @@
         inset 2px 2px 6px rgba(255, 255, 255, 0.3),
         inset -2px -2px 10px rgba(0, 0, 0, 0.4),
         inset 0 0 60px rgba(255, 255, 255, 0.05),
+        0 0 40px rgba(0, 229, 255, 0.25), /* Bagliore ciano leggermente intensificato al passaggio */
         -20px 15px 40px rgba(0, 0, 0, 0.5);
 }
 
-.mate-panel-content { padding: 40px 30px; position: relative; z-index: 2; transform-style: preserve-3d; }
-
-/* Pulsante di chiusura */
-.mate-close-btn {
-    position: absolute; top: 15px; right: 20px; background: rgba(255,255,255,0.05); border: none;
-    box-shadow: inset 1px 1px 3px rgba(255,255,255,0.2), inset -1px -1px 3px rgba(0,0,0,0.3);
-    color: #fff; width: 36px; height: 36px; border-radius: 50%; font-size: 20px; cursor: pointer; 
-    display: flex; align-items: center; justify-content: center; transition: 0.3s; z-index: 10001;
-    transform: translateZ(20px); 
+/* 3. L'Avatar e i Titoli (Modificati colori e dimensioni) */
+.mate-title h2 { 
+    margin: 0 0 5px 0; 
+    font-size: 24px; /* Ingrandito quasi come l'H3 */
+    font-weight: 800;
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+    color: #00E5FF; /* Colore ciano brillante dei bullet point */
+    opacity: 1; 
+    text-shadow: 0 0 15px rgba(0, 229, 255, 0.5); 
 }
-.mate-close-btn:hover { background: rgba(255,255,255,0.1); transform: translateZ(30px) scale(1.1); }
 
-/* 3. L'Avatar */
-.mate-header { display: flex; align-items: center; gap: 25px; margin-bottom: 35px; transform: translateZ(20px); }
-.mate-avatar-wrapper {
-    width: 96px; height: 96px; border-radius: 50%; padding: 6px; flex-shrink: 0;
-    background: linear-gradient(135deg, #9DE3FD 0%, #70AFED 25%, #888CE9 50%, #B393E3 70%, #E3AFA0 85%, #E28675 100%);
-    box-shadow: -5px 5px 20px rgba(157, 227, 253, 0.3), 5px -5px 20px rgba(226, 134, 117, 0.2), inset 0 0 10px rgba(0,0,0,0.6);
+.mate-title h3 { 
+    margin: 0 0 15px; 
+    font-size: 26px; 
+    font-weight: 700; 
+    letter-spacing: -0.5px; 
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5); 
 }
-.mate-avatar-wrapper img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; background: #0a0c12; border: 3px solid #0a0c12; }
 
-.mate-title h2 { margin: 0; font-size: 11px; text-transform: uppercase; letter-spacing: 3px; color: #9DE3FD; opacity: 0.9; text-shadow: 0 0 10px rgba(157, 227, 253, 0.4); }
-.mate-title h3 { margin: 5px 0 12px; font-size: 26px; font-weight: 700; letter-spacing: -0.5px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
-.mate-badge { background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 600; box-shadow: inset 1px 1px 2px rgba(255,255,255,0.2); text-transform: uppercase; color: #fff; letter-spacing: 1px; }
-
+.mate-badge { 
+    background: rgba(255,255,255,0.05); 
+    padding: 6px 12px; /* Aumentato il padding per bilanciare il font più grande */
+    border-radius: 6px; 
+    font-size: 12px; /* Ingrandito da 10px a 12px */
+    font-weight: 600; 
+    box-shadow: inset 1px 1px 2px rgba(255,255,255,0.2); 
+    text-transform: uppercase; 
+    color: #fff; 
+    letter-spacing: 1px; 
+}
 /* 4. Le Sezioni Interne (Con Bordo Neon Ciano) */
 .mate-section { 
     margin-bottom: 25px; 
@@ -365,16 +371,16 @@
         </div>
     </section>
     
-    <!-- SEZIONE VIDEO A TUTTO SCHERMO (Sfumato solo sopra/sotto, a filo di lato) -->
-    <section style="position: relative; width: 100%; background-color: #0b0b0f; padding: 40px 0; overflow: hidden;">
-        <!-- Container forzato a 100vw per ignorare i margini della pagina -->
-        <div style="position: relative; width: 100vw; margin: 0 calc(-50vw + 50%); display: flex; justify-content: center;">
+    <!-- SEZIONE VIDEO A TUTTO SCHERMO (Correzione Sfumatura) -->
+    <section style="position: relative; width: 100%; background-color: #0b0b0f; overflow: hidden; line-height: 0;">
+        <!-- Container forzato a 100vw -->
+        <div style="position: relative; width: 100vw; margin: 0 calc(-50vw + 50%); display: flex; justify-content: center; background-color: #0b0b0f;">
             <video autoplay loop muted playsinline style="width: 100%; height: auto; object-fit: cover; display: block; pointer-events: none;" poster="https://cdn.prod.website-files.com/69b8d32a03ce13513e236a94%2F69d66d63c8410eabe225899a_6271869_Business_People_1280x720_poster.0000000.jpg">
                 <source src="https://cdn.prod.website-files.com/69b8d32a03ce13513e236a94%2F69d66d63c8410eabe225899a_6271869_Business_People_1280x720_mp4.mp4" type="video/mp4"/>
                 <source src="https://cdn.prod.website-files.com/69b8d32a03ce13513e236a94%2F69d66d63c8410eabe225899a_6271869_Business_People_1280x720_webm.webm" type="video/webm"/>
             </video>
-            <!-- Maschera di sfumatura SOLO verticale (Top/Bottom) -->
-            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, #0b0b0f 0%, rgba(11,11,15,0) 15%, rgba(11,11,15,0) 85%, #0b0b0f 100%); pointer-events: none;"></div>
+            <!-- Maschera di sfumatura: estesa fino al 100% per fondersi col nero senza stacchi -->
+            <div style="position: absolute; top: -2px; left: 0; right: 0; bottom: -2px; background: linear-gradient(to bottom, #0b0b0f 0%, rgba(11,11,15,0) 20%, rgba(11,11,15,0) 80%, #0b0b0f 100%); pointer-events: none;"></div>
         </div>
     </section>
     
@@ -619,7 +625,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
 
         <div class="mate-section mate-mission">
-            <h4>Mission & Problema Risolto</h4>
+            <h4>Mission</h4>
             <p id="mate-problem"></p>
         </div>
 
