@@ -106,13 +106,25 @@
 
 /* 3. L'Avatar e i Titoli */
 .mate-header { display: flex; align-items: center; gap: 25px; margin-bottom: 35px; transform: translateZ(20px); }
+
+/* CONTENITORE: Gestisce lo spessore dell'aureola sfumata tramite il padding */
 .mate-avatar-wrapper {
-    width: 96px; height: 96px; border-radius: 50%; padding: 6px; flex-shrink: 0;
+    width: 96px; height: 96px; 
+    border-radius: 50%; 
+    padding: 8px; /* AUMENTATO da 6px a 8px: questo è lo spessore del cerchio sfumato */
+    flex-shrink: 0;
     background: linear-gradient(135deg, #9DE3FD 0%, #70AFED 25%, #888CE9 50%, #B393E3 70%, #E3AFA0 85%, #E28675 100%);
     box-shadow: -5px 5px 20px rgba(157, 227, 253, 0.3), 5px -5px 20px rgba(226, 134, 117, 0.2), inset 0 0 10px rgba(0,0,0,0.6);
 }
-.mate-avatar-wrapper img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; background: #0a0c12; border: 3px solid #0a0c12; }
 
+/* IMMAGINE: Gestisce lo spessore del cerchio nero tramite il border */
+.mate-avatar-wrapper img { 
+    width: 100%; height: 100%; 
+    border-radius: 50%; 
+    object-fit: cover; 
+    background: #0a0c12; 
+    border: 8px solid #0a0c12; /* AUMENTATO da 3px a 8px: ora è spesso uguale al padding sfumato */
+}
 .mate-title h2 { 
     margin: 0 0 5px 0; 
     font-size: 24px; 
