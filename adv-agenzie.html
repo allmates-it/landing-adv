@@ -5,31 +5,31 @@
 <!-- INIZIO: STILE PANNELLO MATE (MATT GLASS 3D) -->
 <!-- ========================================== -->
 <style>
+:root {
+    /* 1. COLORE BASE (Vetro, Bagliori, Ombre, Box) -> Viola Profondo (Allmates Heritage) */
+    --mate-glow-rgb: 107, 70, 193; 
+    
+    /* 2. COLORE ACCENTO (Testi, Pallini, API, Highlight) -> Pesca Luminoso */
+    --mate-accent-rgb: 255, 159, 127;
+}
+
 /* 1. L'Overlay e l'Ambiente Luminoso (Le Sfere di Luce) */
 .mate-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-   
-    /*  TOLTI per evitare sfocatura intera pagina:
-    background: rgba(8, 10, 15, 0.6); 
-    backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); 
-    */
-    
-    /* Aggiungo solo un velo scurissimo leggero per staccare il popup dal fondo */
     background: rgba(0, 0, 0, 0.4);
-    
     opacity: 0; visibility: hidden; transition: all 0.6s ease; z-index: 9998;
     perspective: 1500px; 
 }
-/* Sfera Ciano (Top Right) */
+/* Sfera luminosa (Top Right) */
 .mate-overlay::before {
     content: ''; position: fixed; top: 5%; right: 2%; width: 450px; height: 450px;
-    background: radial-gradient(circle, rgba(157, 227, 253, 0.45) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(var(--mate-glow-rgb), 0.5) 0%, transparent 70%);
     filter: blur(70px); opacity: 0; transition: opacity 1s ease; pointer-events: none;
 }
 .mate-overlay.active { opacity: 1; visibility: visible; }
 .mate-overlay.active::before, .mate-overlay.active::after { opacity: 1; }
 
-/* 2. Il Pannello 3D (Bordo Ciano, Bagliore Ciano chiaro) */
+/* 2. Il Pannello 3D */
 .mate-panel {
     position: fixed; top: 2vh; right: -100%; 
     width: 100%; max-width: 480px; height: 96vh; 
@@ -40,22 +40,17 @@
         linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%);
     backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
     
-    /* Bordo fisico Ciano */
-    border: 1px solid rgba(0, 229, 255, 0.6);
+    /* Bordo fisico */
+    border: 1px solid rgba(var(--mate-glow-rgb), 0.6);
     
     box-shadow: 
         inset 2px 2px 6px rgba(255, 255, 255, 0.25),
         inset -2px -2px 10px rgba(0, 0, 0, 0.3),
         inset 0 0 60px rgba(255, 255, 255, 0.03),
         
-        /* LA LUCE NEON INTERNA (Ciano brillante) */
-        inset 0 0 25px rgba(0, 229, 255, 0.6),
-        inset 0 0 80px rgba(0, 229, 255, 0.15),
-        
-        /* TOLTA */
-        /* LA LUCE NEON ESTERNA (Ciano brillante) */
-        /* 0 0 25px rgba(0, 229, 255, 0.6), */ 
-        /* 0 0 80px rgba(0, 229, 255, 0.15), */
+        /* LA LUCE NEON INTERNA */
+        inset 0 0 25px rgba(var(--mate-glow-rgb), 0.6),
+        inset 0 0 80px rgba(var(--mate-glow-rgb), 0.2),
         
         -30px 20px 60px rgba(0, 0, 0, 0.6); 
         
@@ -71,30 +66,24 @@
 .mate-panel::-webkit-scrollbar { display: none; }
 .mate-panel.active { right: 1vw; }
 
-/* STATO HOVER (Mouse sopra il pannello principale) */
+/* STATO HOVER */
 .mate-panel.active:hover {
-    transform: rotateY(-2deg) scale(1); /* Si raddrizza verso l'utente */
+    transform: rotateY(-2deg) scale(1); 
     
     box-shadow: 
         inset 2px 2px 6px rgba(255, 255, 255, 0.3),
         inset -2px -2px 10px rgba(0, 0, 0, 0.4),
         inset 0 0 60px rgba(255, 255, 255, 0.05),
         
-        /* LUCE NEON INTERNA (Leggermente intensificata) */
-        inset 0 0 35px rgba(0, 229, 255, 0.8),
-        inset 0 0 100px rgba(0, 229, 255, 0.25),
-
-        /* TOLTA */
-        /* LUCE NEON ESTERNA (Copiata identica per non farla sparire all'hover) */
-        /* 0 0 15px rgba(0, 229, 255, 0.6),*/ 
-        /* 0 0 60px rgba(0, 229, 255, 0.4),*/ 
+        /* LUCE NEON INTERNA (Intensificata) */
+        inset 0 0 35px rgba(var(--mate-glow-rgb), 0.8),
+        inset 0 0 100px rgba(var(--mate-glow-rgb), 0.3),
         
-        -20px 15px 40px rgba(0, 0, 0, 0.5); /* Ombra scura 3D ridotta */
+        -20px 15px 40px rgba(0, 0, 0, 0.5); 
 }
 
 .mate-panel-content { padding: 40px 30px; position: relative; z-index: 2; transform-style: preserve-3d; }
 
-/* Pulsante di chiusura */
 .mate-close-btn {
     position: absolute; top: 15px; right: 20px; background: rgba(255,255,255,0.05); border: none;
     box-shadow: inset 1px 1px 3px rgba(255,255,255,0.2), inset -1px -1px 3px rgba(0,0,0,0.3);
@@ -107,7 +96,6 @@
 /* 3. L'Avatar e i Titoli */
 .mate-header { display: flex; align-items: center; gap: 25px; margin-bottom: 35px; transform: translateZ(20px); }
 
-/* CONTENITORE ESTERNO: Gestisce l'aureola sfumata */
 .mate-avatar-wrapper {
     width: 103px; height: 103px;
     border-radius: 50%;
@@ -117,21 +105,18 @@
     box-shadow: -5px 5px 20px rgba(157, 227, 253, 0.3), 5px -5px 20px rgba(226, 134, 117, 0.2), inset 0 0 10px rgba(0,0,0,0.6);
 }
 
-/* NUOVO CONTENITORE INTERNO: Gestisce il cerchio nero e "taglia" l'immagine zoomata */
 .mate-avatar-inner {
     width: 100%; height: 100%;
     border-radius: 50%;
     border: 7px solid #0a0c12;
     background: #0a0c12;
-    overflow: hidden; /* FONDAMENTALE: Taglia la parte di foto che esce dal cerchio */
+    overflow: hidden; 
     display: flex; align-items: center; justify-content: center;
 }
 
-/* IMMAGINE: Zoomata e riposizionata */
 .mate-avatar-inner img {
     width: 100%; height: 100%;
     object-fit: cover;
-    /* TRUCCO ZOOM: Ingrandisce del 45% e la sposta in giù dell'8% per tagliare l'aria sopra la testa */
     transform: scale(1.45) translateY(8%);
 }
 
@@ -141,27 +126,25 @@
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: #00E5FF;
+    color: rgb(var(--mate-accent-rgb));
     opacity: 1;
-    text-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
+    text-shadow: 0 0 15px rgba(var(--mate-accent-rgb), 0.5);
 }
 
 .mate-title h3 { margin: 0 0 15px; font-size: 26px; font-weight: 700; letter-spacing: -0.5px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
 .mate-badge { background: rgba(255,255,255,0.05); padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; box-shadow: inset 1px 1px 2px rgba(255,255,255,0.2); text-transform: uppercase; color: #fff; letter-spacing: 1px; }
 
-/* 4. Le Sezioni Interne (Spente di default, accese all'hover) */
+/* 4. Le Sezioni Interne */
 .mate-section { 
     margin-bottom: 25px; 
     background: rgba(255, 255, 255, 0.02); 
     padding: 22px; 
     border-radius: 20px; 
-    
-    /* STATO SPENTO: Bordo neutro e quasi invisibile, nessuna luce neon */
     border: 1px solid rgba(255, 255, 255, 0.05);
     box-shadow: 
         inset 1px 1px 4px rgba(255, 255, 255, 0.1), 
         inset -1px -1px 5px rgba(0, 0, 0, 0.2),
-        0 10px 20px rgba(0,0,0,0.15); /* Solo ombra di profondità normale */
+        0 10px 20px rgba(0,0,0,0.15); 
         
     transform: translateZ(15px);
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
@@ -170,17 +153,17 @@
 .mate-section:hover {
     transform: translateZ(25px); 
     
-    /* Bordo Ciano all'hover */
-    border-color: rgba(0, 229, 255, 0.8);
+    /* Bordo Base all'hover */
+    border-color: rgba(var(--mate-glow-rgb), 0.8);
 
     box-shadow: 
         inset 1px 1px 5px rgba(255, 255, 255, 0.2), 
         inset -1px -1px 5px rgba(0, 0, 0, 0.3), 
         
-        /* Luce Neon Esterna (Ciano brillante) */
-        0 0 25px rgba(0, 229, 255, 0.6), 
-        /* Luce Neon Interna (Ciano brillante) */
-        inset 0 0 50px rgba(0, 229, 255, 0.15), 
+        /* Luce Neon Esterna */
+        0 0 25px rgba(var(--mate-glow-rgb), 0.5), 
+        /* Luce Neon Interna */
+        inset 0 0 50px rgba(var(--mate-glow-rgb), 0.2), 
         
         0 15px 25px rgba(0,0,0,0.3);
 }
@@ -190,16 +173,16 @@
     color: #fff; opacity: 0.9;
     letter-spacing: 1.5px; display: flex; align-items: center; gap: 8px; 
 }
-/* Pallino Ciano Brillante */
+/* Pallino Accento */
 .mate-section h4::before { 
     content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; 
-    background: #00E5FF; box-shadow: 0 0 10px #00E5FF; 
+    background: rgb(var(--mate-accent-rgb)); box-shadow: 0 0 10px rgb(var(--mate-accent-rgb)); 
 }
 .mate-section p { font-size: 14px; line-height: 1.7; margin: 0; color: #e2e8f0; font-weight: 300; text-wrap: pretty; }
 
-/* Skills & Patenti */
+/* Skills */
 .mate-skills ul { list-style: none; padding: 0; margin: 0; }
-.mate-skills li { margin-bottom: 18px; font-size: 14px; padding-left: 15px; border-left: 2px solid rgba(0, 229, 255, 0.3); }
+.mate-skills li { margin-bottom: 18px; font-size: 14px; padding-left: 15px; border-left: 2px solid rgba(var(--mate-glow-rgb), 0.6); }
 .mate-skills li:last-child { margin-bottom: 0; }
 .mate-skills li strong { display: block; color: #fff; margin-bottom: 4px; font-size: 15px; font-weight: 600;}
 .mate-skills li span { color: #cbd5e1; font-size: 13px; line-height: 1.5; display: block; font-weight: 300;}
@@ -208,17 +191,17 @@
 .tag { background: rgba(255, 255, 255, 0.05); color: #fff; padding: 6px 14px; border-radius: 12px; font-size: 12px; box-shadow: inset 1px 1px 2px rgba(255,255,255,0.1); font-weight: 500; border: 1px solid rgba(255,255,255,0.05); }
 .mate-tech-badges { display: flex; gap: 10px; flex-wrap: wrap;}
 .tech-badge { background: rgba(0,0,0,0.2); padding: 8px 14px; border-radius: 10px; font-size: 12px; box-shadow: inset 1px 1px 2px rgba(255,255,255,0.1), inset -1px -1px 3px rgba(0,0,0,0.4); color: #f8fafc; font-family: monospace; display: flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,0.05); }
-.tech-badge::before { content: 'API'; color: #00E5FF; font-size: 10px; font-weight: bold; background: rgba(0, 229, 255, 0.1); padding: 2px 4px; border-radius: 4px; }
+.tech-badge::before { content: 'API'; color: rgb(var(--mate-accent-rgb)); font-size: 10px; font-weight: bold; background: rgba(var(--mate-accent-rgb), 0.15); padding: 2px 4px; border-radius: 4px; }
 
-/* 5. Box ROI (Il Bottom Line) */
+/* 5. Box ROI */
 .mate-roi {
-    background: linear-gradient(135deg, rgba(0, 229, 255, 0.05), rgba(255, 255, 255, 0.01));
-    border-color: rgba(0, 229, 255, 0.3);
+    background: linear-gradient(135deg, rgba(var(--mate-glow-rgb), 0.1), rgba(255, 255, 255, 0.01));
+    border-color: rgba(var(--mate-glow-rgb), 0.4);
 }
 .roi-grid { display: flex; flex-direction: column; gap: 14px; font-size: 14px; color: #f1f5f9;}
 .roi-item { display: flex; align-items: center; gap: 10px; }
 .roi-highlight { margin-top: 5px; padding-top: 15px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-weight: 600; color: #fff; font-size: 16px; }
-.roi-highlight span { color: #00E5FF; text-shadow: 0 0 15px rgba(0, 229, 255, 0.4); }
+.roi-highlight span { color: rgb(var(--mate-accent-rgb)); text-shadow: 0 0 15px rgba(var(--mate-accent-rgb), 0.4); }
 </style>
 <!-- ========================================== -->
 <!-- FINE: STILE PANNELLO MATE (MATT GLASS 3D) -->
@@ -358,7 +341,7 @@
                             <p class="paragraph-11" style="margin: 0 0 8px 0; font-size: 20px; color: #d4d4d8; text-wrap: pretty; line-height: 1.5;">
                                 <strong style="color:#fff;">⚡ Result:</strong> Elabora strategie Dual-Mode (Conservative/Aggressive) pronte all'uso per il media buyer.
                             </p>
-                            <p class="paragraph-11" style="margin: 0; font-size: 20px; color: #00E5FF; text-wrap: pretty; line-height: 1.5; font-weight: 600;">
+                            <p class="paragraph-11" style="margin: 0; font-size: 20px; color: rgb(var(--mate-accent-rgb)); text-wrap: pretty; line-height: 1.5; font-weight: 600;">
                                 📈 ROI: Salva 5-10 ore a settimana per account in reportistica e data-crunching.
                             </p>
                         </div>
@@ -375,7 +358,7 @@
                             <p class="paragraph-11" style="margin: 0 0 8px 0; font-size: 20px; color: #d4d4d8; text-wrap: pretty; line-height: 1.5;">
                                 <strong style="color:#fff;">⚡ Result:</strong> Azzera gli errori manuali di data-entry con rollback automatico e creazione sicura in stato "Paused".
                             </p>
-                            <p class="paragraph-11" style="margin: 0; font-size: 20px; color: #00E5FF; text-wrap: pretty; line-height: 1.5; font-weight: 600;">
+                            <p class="paragraph-11" style="margin: 0; font-size: 20px; color: rgb(var(--mate-accent-rgb)); text-wrap: pretty; line-height: 1.5; font-weight: 600;">
                                 📈 ROI: Salva 8-15 ore a settimana per account, abbattendo i tempi da ore a secondi.
                             </p>
                         </div>
@@ -402,7 +385,7 @@
                             <p class="paragraph-11" style="margin: 0 0 8px 0; font-size: 20px; color: #d4d4d8; text-wrap: pretty; line-height: 1.5;">
                                 <strong style="color:#fff;">⚡ Result:</strong> Previene la creative fatigue e i picchi di CPM prima che il ROAS crolli, salvando budget.
                             </p>
-                            <p class="paragraph-11" style="margin: 0; font-size: 20px; color: #00E5FF; text-wrap: pretty; line-height: 1.5; font-weight: 600;">
+                            <p class="paragraph-11" style="margin: 0; font-size: 20px; color: rgb(var(--mate-accent-rgb)); text-wrap: pretty; line-height: 1.5; font-weight: 600;">
                                 📈 ROI: Salva 6-12 ore a settimana per account. Trasforma i dati in decisioni in pochi minuti.
                             </p>
                         </div>
@@ -419,7 +402,7 @@
                             <p class="paragraph-11" style="margin: 0 0 8px 0; font-size: 20px; color: #d4d4d8; text-wrap: pretty; line-height: 1.5;">
                                 <strong style="color:#fff;">⚡ Result:</strong> Applica il Double-Check Protocol post-creazione interrogando le API per garantire zero allucinazioni.
                             </p>
-                            <p class="paragraph-11" style="margin: 0; font-size: 20px; color: #00E5FF; text-wrap: pretty; line-height: 1.5; font-weight: 600;">
+                            <p class="paragraph-11" style="margin: 0; font-size: 20px; color: rgb(var(--mate-accent-rgb)); text-wrap: pretty; line-height: 1.5; font-weight: 600;">
                                 📈 ROI: Salva 10-20 ore a settimana per account. Lanci multi-formato in minuti anziché ore.
                             </p>
                         </div>
@@ -446,7 +429,7 @@
                             <p class="paragraph-11" style="margin: 0 0 8px 0; font-size: 20px; color: #d4d4d8; text-wrap: pretty; line-height: 1.5;">
                                 <strong style="color:#fff;">⚡ Result:</strong> Traccia le partnership organiche dei creator per abbassare drasticamente il rischio di flop creativo.
                             </p>
-                            <p class="paragraph-11" style="margin: 0; font-size: 20px; color: #00E5FF; text-wrap: pretty; line-height: 1.5; font-weight: 600;">
+                            <p class="paragraph-11" style="margin: 0; font-size: 20px; color: rgb(var(--mate-accent-rgb)); text-wrap: pretty; line-height: 1.5; font-weight: 600;">
                                 📈 ROI: Azzera i tempi di ricerca manuale. Intelligence competitiva per ottimizzare i budget di test fin dal day-one.
                             </p>
                         </div>
@@ -463,7 +446,7 @@
                             <p class="paragraph-11" style="margin: 0 0 8px 0; font-size: 20px; color: #d4d4d8; text-wrap: pretty; line-height: 1.5;">
                                 <strong style="color:#fff;">⚡ Result:</strong> Setup programmatico di Smart e Spark Ads con sync automatico delle Audience dal CRM.
                             </p>
-                            <p class="paragraph-11" style="margin: 0; font-size: 20px; color: #00E5FF; text-wrap: pretty; line-height: 1.5; font-weight: 600;">
+                            <p class="paragraph-11" style="margin: 0; font-size: 20px; color: rgb(var(--mate-accent-rgb)); text-wrap: pretty; line-height: 1.5; font-weight: 600;">
                                 📈 ROI: Permette di gestire decine di account contemporaneamente, scalando le operations senza la necessità di assumere nuovo personale.
                             </p>
                         </div>
